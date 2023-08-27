@@ -3,19 +3,21 @@ var router = express.Router();
 
 let messages = require("../public/javascripts/messages");
 
-/* GET home page. */
+/* GET users listing. */
 router.get("/", function (req, res, next) {
-  const onClick = () => res.redirect("/new");
-
-  res.render("index", {
-    title: "Mini msg board",
-    messages: messages,
-    onClick: onClick,
-  });
+  res.render("form");
 });
 
 router.post("/", function (req, res) {
-  res.redirect("/new");
+  console.log(req);
+  let user = req.body.name;
+  let text = req.body.text;
+
+  console.log(user, text);
+
+  messages.push({ text: text, user: user, added: new Date() });
+
+  res.redirect("/");
 });
 
 module.exports = router;
